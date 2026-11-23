@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าแรก | เที่ยวบ้านเรา</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Tahoma", sans-serif;
+            line-height: 1.8;
+            color: #604B78;
+            background: #FAF8FC;
+        }
+
+        /* ส่วนหัวเว็บไซต์ */
+        header {
+            background: #E9DFF5;
+            padding: 15px 23px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 25px;
+            color: #604B78;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #604B78;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #9276B5;
+            color: white;
+        }
+
+        /* ภาพแบนเนอร์ */
+        .banner {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0 0 18px 18px;
+        }
+
+        /* ส่วนสไลด์โชว์ */
+        .slideshow-section {
+            max-width: 950px;
+            margin: 45px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .slideshow-section h2 {
+            color: #8062A5;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .slideshow-section p {
+            margin-bottom: 20px;
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(80, 60, 100, 0.13);
+        }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ปุ่มเลื่อนภาพ */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(96, 75, 120, 0.65);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 43px;
+            height: 43px;
+            font-size: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .prev {
+            left: 15px;
+        }
+
+        .next {
+            right: 15px;
+        }
+
+        .prev:hover, .next:hover {
+            background: #604B78;
+        }
+
+        /* จุดบอกตำแหน่ง */
+        .dots {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 7px;
+            background: #DCCFEA;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            width: 22px;
+            border-radius: 10px;
+            background: #9276B5;
+        }
+
+        /* การ์ดแนะนำ */
+        .recommend {
+            max-width: 950px;
+            margin: 45px auto 55px;
+            padding: 0 20px;
+        }
+
+        .recommend h2 {
+            color: #8062A5;
+            font-size: 23px;
+        }
+
+        .recommend > p {
+            margin-bottom: 25px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #E9DFF5;
+            border-radius: 19px;
+            padding: 22px;
+            box-shadow: 0 5px 18px rgba(80, 60, 100, 0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 22px rgba(80, 60, 100, 0.15);
+        }
+
+        .card h3 {
+            color: #8062A5;
+            font-size: 18px;
+        }
+
+        .card p {
+            min-height: 55px;
+        }
+
+        .card a {
+            color: #8050A8;
+            font-weight: bold;
+        }
+
+        /* ส่วนท้ายเว็บไซต์ */
+        footer {
+            background: #E9DFF5;
+            text-align: center;
+            padding: 25px 15px;
+            color: #604B78;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* รองรับโทรศัพท์ */
+        @media (max-width: 700px) {
+            header h1 {
+                font-size: 21px;
+            }
+
+            nav {
+                gap: 4px;
+            }
+
+            nav a {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+
+            .slider {
+                height: 230px;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+
+            .slideshow-section h2 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- เมนูด้านบน -->
+    <header>
+        <h1>เที่ยวบ้านเรา</h1>
+
+        <nav>
+            <a href="index.html" class="active">หน้าแรก</a>
+            <a href="places.html">ที่เที่ยว</a>
+            <a href="food.html">อาหาร</a>
+            <a href="plan.html">วางแผนเที่ยว</a>
+            <a href="travel.html">ข้อมูลการเดินทาง</a>
+	        <a href="login.html">เข้าสู่ระบบ</a>
+        </nav>
+    </header>
+
+    <!-- ภาพแบนเนอร์ -->
+    <section>
+        <img src="images/pic1.png"
+             alt="เที่ยวบ้านเราในหนึ่งวัน จังหวัดประจวบคีรีขันธ์"
+             class="banner">
+    </section>
+
+    <!-- สไลด์โชว์สถานที่ท่องเที่ยว -->
+    <section class="slideshow-section">
+
+        <h2>สถานที่ท่องเที่ยวจังหวัดประจวบคีรีขันธ์</h2>
+        <p>เที่ยวชมความสวยงามของบ้านเรา</p>
+
+        <div class="slider">
+
+            <div class="slides" id="slides">
+
+                <div class="slide">
+                    <img src="images/Kaow.jpg" alt="เขาช่องกระจก">
+                </div>
+
+                <div class="slide">
+                    <img src="images/aomanow.jpg" alt="อ่าวมะนาว">
+                </div>
+
+                <div class="slide">
+                    <img src="images/KLM.jpg" alt="สถานที่ท่องเที่ยว">
+                </div>
+
+                <div class="slide">
+                    <img src="images/lukmuang.jpg" alt="ศาลหลักเมือง">
+                </div>
+
+                <div class="slide">
+                    <img src="images/sapanpla.jpg" alt="สะพานปลา">
+                </div>
+
+            </div>
+
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+
+        </div>
+
+        <!-- จุดบอกตำแหน่งภาพ -->
+        <div class="dots">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
+
+    </section>
+
+    <!-- การ์ดแนะนำสถานที่ -->
+    <section class="recommend">
+
+        <h2>เริ่มสนุกจากจุดหมายที่คุณสนใจ</h2>
+
+        <p>เลือกสถานที่ท่องเที่ยว แล้วจัดเส้นทางให้เหมาะกับเวลาของคุณ</p>
+
+        <div class="card-container">
+
+            <div class="card">
+                <h3>เขาช่องกระจก</h3>
+                <p>
+                    ชมวิวเมืองประจวบคีรีขันธ์จากมุมสูง
+                    และสักการะสิ่งศักดิ์สิทธิ์บนยอดเขา
+                </p>
+                <a href="places.html">อ่านรายละเอียด</a>
+            </div>
+
+            <div class="card">
+                <h3>ศาลหลักเมืองประจวบคีรีขันธ์</h3>
+                <p>
+                    เยี่ยมชมสถาปัตยกรรมและสถานที่สำคัญ
+                    คู่บ้านคู่เมือง
+                </p>
+                <a href="places.html">อ่านรายละเอียด</a>
+            </div>
+
+            <div class="card">
+                <h3>วางแผนเที่ยว</h3>
+                <p>
+                    ตัวอย่างแผนเที่ยวหนึ่งวัน
+                    พร้อมข้อควรเตรียมก่อนออกเดินทาง
+                </p>
+                <a href="plan.html">ดูแผนเที่ยว</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ส่วนท้ายเว็บไซต์ -->
+    <footer>
+        <p>ชมพูน ลงทิพย์ 006</p>
+        <p>ใบงานฝึกปฏิบัติวิชาการสร้างเว็บไซต์ทางธุรกิจ</p>
+    </footer>
+
+    <!-- JavaScript ควบคุมสไลด์ -->
+    <script>
+
+        let slideIndex = 0;
+        let slideTimer;
+
+        const slides = document.getElementById("slides");
+        const dots = document.querySelectorAll(".dot");
+        const totalSlides = document.querySelectorAll(".slide").length;
+
+        function showSlide(index) {
+
+            if (index >= totalSlides) {
+                slideIndex = 0;
+            } else if (index < 0) {
+                slideIndex = totalSlides - 1;
+            } else {
+                slideIndex = index;
+            }
+
+            slides.style.transform =
+                "translateX(-" + (slideIndex * 100) + "%)";
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active", i === slideIndex);
+            });
+
+        }
+
+        function moveSlide(step) {
+            showSlide(slideIndex + step);
+            resetTimer();
+        }
+
+        function currentSlide(index) {
+            showSlide(index);
+            resetTimer();
+        }
+
+        function resetTimer() {
+            clearInterval(slideTimer);
+
+            slideTimer = setInterval(() => {
+                showSlide(slideIndex + 1);
+            }, 5000);
+        }
+
+        resetTimer();
+
+    </script>
+
+</body>
+</html>
